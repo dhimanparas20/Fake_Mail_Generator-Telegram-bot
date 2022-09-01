@@ -14,9 +14,6 @@ try:
         if res.status_code == 200:
             with open('config.env', 'wb+') as f:
                 f.write(res.content)
-                system("ls")
-                system("cat config.env")
-                sleep("10")
         else:
             log_error(f"Failed to download config.env {res.status_code}")
     except Exception as e:
@@ -170,26 +167,3 @@ def latest_mail(mail,indx):
       return(f"☺️ Dear user, the inbox for {mail} is currenty empty, please wait or get some mails☺️")
   else:
     return(f"☺️ Dear user, the email {mail} is owned by another account.\nPlease try another Adress☺️")  
-    
-
-'''   
-# to show n last mails + INDEX   
-def recent_mail(mail,i):
-  jon,total_mails,frm,frm_mail,date_time,id_code,attachment_id,subject,index,priv,message = parse_mail(mail,i)
-  print("processing JSON📂")
-  if priv == False:
-    print(jon[i])
-    print("JSON processed✅")
-    print("---------------------------------------")
-    return(
-           f"INDEX NO.: {index}"+
-           f"\n\nFrom: {frm} <{frm_mail}>"+
-           f'\nTo: {mail}'+
-           f"\nDate & Time: {date_time}"+
-           f"\nid code: {id_code}"+
-           f"\nAttachment ID: {attachment_id}"+
-           f"\n\nSubject: {subject:}"
-           f"\n\n📧{message}") 
-  else:
-    return(f"☺️ Dear user, the email {mail} is owned by another account.\nPlease try another Adress☺️") 
-'''
