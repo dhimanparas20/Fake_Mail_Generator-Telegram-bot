@@ -3,6 +3,7 @@ from os import path,system,environ
 from requests import get as rget
 import requests, json 
 from time import sleep
+import os
 
 # Downloads the Config.env file
 CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
@@ -19,11 +20,10 @@ try:
     except Exception as e:
         log_error(f"CONFIG_FILE_URL: {e}")
 except:
-    pass
-
+    pass       
+  
+# Loading Config Vars from Config.env file
 load_dotenv('config.env', override=True)
-
-sleep(5)
 def getConfig(name: str):
     return environ[name]
  
@@ -33,19 +33,9 @@ MAILSAC_API_KEY = getConfig("MAILSAC_API_KEY")
 # Adding API headers
 headers = {"Mailsac-Key": MAILSAC_API_KEY}    
 
-# counts total no of mails in inbox
-def count(mail):
-  req = requests.get(f'https://mailsac.com/api/addresses/{mail}/messages', headers=headers) # Fetch data using API
-  jon = req.json() #convert data intoto JSON
-  print(req.status_code)
-  if req.status_code != 403 :
-    count = len(jon)
-    return(f"🧬Total mails for {mail} 👉 {len(jon)}")
-  else:
-    return(f"Sorry! but the mail is private, hence you cant access it 😔.\nPlease try another Address")  
  
 # Returns total no of messages for a mail id  
-def pass_value(mail):
+def count(mail):
   req = requests.get(f'https://mailsac.com/api/addresses/{mail}/messages', headers=headers) # Fetch data using API
   jon = req.json() #convert data intoto JSON
   if req.status_code != 403 :
@@ -80,9 +70,9 @@ def chk_private(mail):
   req = requests.get(f'https://mailsac.com/api/addresses/{mail}/messages', headers=headers) # Fetch data using API
   jon = req.json() #convert data intoto JSON
   if req.status_code == 403 :
-    return(f"Sorry! 👉 {mail} is private you cant use it😔")
+    return(f"Private, you cant use it😔")
   else:
-    return(f"{mail} 👉 is available. You can use it😁")  
+    return(f"Available, You can use it😁")  
     
 # sends Attachment only (BETA)
 def attach(mail,i):
@@ -145,7 +135,7 @@ def parse_mail(mail,i):
     
 
  # latest mail  only
-def latest_mail(mail,indx):
+def send_mail(mail,indx):
   print(f"processing JSON📂 {indx}")
   jon,total_mails,frm,frm_mail,date_time,id_code,attachment_id,subject,index,priv,message = parse_mail(mail,indx)
   print("----------------------------------EMAIL JSON DATA----------------------------------")
@@ -166,4 +156,4 @@ def latest_mail(mail,indx):
     else:
       return(f"☺️ Dear user, the inbox for {mail} is currenty empty, please wait or get some mails☺️")
   else:
-    return(f"☺️ Dear user, the email {mail} is owned by another account.\nPlease try another Adress☺️")  
+    return(f"☺️ Dear user, the email {mail} is owned by another account.\nPlease try another Address☺️")
