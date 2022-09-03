@@ -51,26 +51,22 @@ def parse_message(message):
       uname = message['my_chat_member']['from']['username']
       txt = message['my_chat_member']['from']['first_name']  
   except: # IF user has no username
-    nan = " NoUsername"
+    uname = " NoUsername"
     if "message" in message.keys(): 
       chat_id = message['message']['from']['id']
       fname = message['message']['from']['first_name']
-      uname = nan
       txt = message['message']['text']      
     elif "edited_message" in message.keys():
       chat_id = message['edited_message']['from']['id'] 
       fname = message['edited_message']['from']['first_name'] 
-      uname = nan
       txt = message['edited_message']['text']
     elif "callback_query" in message.keys():
       chat_id = message['callback_query']['from']['id']
       fname = message['callback_query']['from']['first_name'] 
-      uname = nan 
       txt = message['callback_query']['data']  
     elif "my_chat_member" in message.keys():
       chat_id = message['my_chat_member']['from']['id']
       fname = message['my_chat_member']['from']['first_name'] 
-      uname = nan
       txt = message['my_chat_member']['from']['first_name']    
   print("-------------------------------------------")
   print("💬chat_id-->", chat_id)
