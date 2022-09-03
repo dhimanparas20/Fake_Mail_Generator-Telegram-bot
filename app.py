@@ -28,52 +28,58 @@ sleep(2)
 app = Flask(__name__)
 # function to parse Bot data from JSON
 def parse_message(message):
-    print("📺 TG-JSON-->",message)
-    try: 
-      try:  # User has a username
-        print(f"Length of username: {len(message['message']['chat']['username'])}")
-        try: # user didnt edit his message
-          chat_id = message['message']['chat']['id']
-          fname = message['message']['chat']['first_name']
-          uname = message['message']['chat']['username']
-          txt = message['message']['text']
-        except: # user edited his message
-          chat_id = message['edited_message']['from']['id'] # for edited messages
-          fname = message['edited_message']['chat']['first_name'] # for edited messages
-          uname = message['edited_message']['chat']['username'] # for edited messages
-          txt = message['edited_message']['text'] # for edited messages
-      except: # User has no username
-        try: # user didnt edit his message
-          print("\nUSER HAS NO USERNAME SO ASSIGNED HIS NAME TO USERNAME VARIABLE :-) ")
-          chat_id = message['message']['chat']['id']
-          fname = message['message']['chat']['first_name']
-          uname = fname
-          txt = message['message']['text']    
-        except:  # user edited his message
-          print("\nUSER HAS NO USERNAME SO ASSIGNED HIS NAME TO USERNAME VARIABLE :-) ")
-          chat_id = message['edited_message']['chat']['id']
-          fname = message['edited_message']['chat']['first_name']
-          uname = fname
-          txt = message['edited_message']['text'] 
-    except:
-      try:  # User has a username
-        chat_id = message['my_chat_member']['from']['id']
-        fname = message['my_chat_member']['chat']['first_name'] 
-        uname = message['my_chat_member']['chat']['username']
-        txt = message['my_chat_member']['chat']['first_name']      
-      except: # User has no username
-        print("\nUSER HAS NO USERNAME SO ASSIGNED HIS NAME TO USERNAME VARIABLE :-) ")
-        chat_id = message['my_chat_member']['from']['id']
-        fname = message['my_chat_member']['chat']['first_name'] 
-        uname = fname
-        txt = message['my_chat_member']['chat']['first_name']     
-    print("-------------------------------------------")
-    print("💬chat_id-->", chat_id)
-    print("first_name-->", fname)
-    print("👥username->", uname)
-    print("📖txt-->", txt)
-    print("-------------------------------------------")
-    return chat_id,txt,fname,uname
+  print("📺 TG-JSON-->",message)
+  try: # If user has a username
+    if "message" in message.keys(): 
+      chat_id = message['message']['from']['id']
+      fname = message['message']['from']['first_name']
+      uname = message['message']['from']['username']
+      txt = message['message']['text']      
+    elif "edited_message" in message.keys():
+      chat_id = message['edited_message']['from']['id'] 
+      fname = message['edited_message']['from']['first_name'] 
+      uname = message['edited_message']['from']['username'] 
+      txt = message['edited_message']['text']
+    elif "callback_query" in message.keys():
+      chat_id = message['callback_query']['from']['id']
+      fname = message['callback_query']['from']['first_name'] 
+      uname = message['callback_query']['from']['username'] 
+      txt = message['callback_query']['data']  
+    elif "my_chat_member" in message.keys():
+      chat_id = message['my_chat_member']['from']['id']
+      fname = message['my_chat_member']['from']['first_name'] 
+      uname = message['my_chat_member']['from']['username']
+      txt = message['my_chat_member']['from']['first_name']  
+  except: # IF user has no username
+    nan = " NoUsername"
+    if "message" in message.keys(): 
+      chat_id = message['message']['from']['id']
+      fname = message['message']['from']['first_name']
+      uname = nan
+      txt = message['message']['text']      
+    elif "edited_message" in message.keys():
+      chat_id = message['edited_message']['from']['id'] 
+      fname = message['edited_message']['from']['first_name'] 
+      uname = nan
+      txt = message['edited_message']['text']
+    elif "callback_query" in message.keys():
+      chat_id = message['callback_query']['from']['id']
+      fname = message['callback_query']['from']['first_name'] 
+      uname = nan 
+      txt = message['callback_query']['data']  
+    elif "my_chat_member" in message.keys():
+      chat_id = message['my_chat_member']['from']['id']
+      fname = message['my_chat_member']['from']['first_name'] 
+      uname = nan
+      txt = message['my_chat_member']['from']['first_name']    
+  print("-------------------------------------------")
+  print("💬chat_id-->", chat_id)
+  print("first_name-->", fname)
+  print("👥username->", uname)
+  print("📖txt-->", txt)
+  print("-------------------------------------------")
+  return chat_id,txt,fname,uname
+
 # function to send message to the user
 def send_message(chat_id, text):
     url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'
