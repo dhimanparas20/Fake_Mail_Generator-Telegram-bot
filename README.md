@@ -7,7 +7,7 @@ So using this repo you can deploy your Telegram Bot that can generate unlimited 
 
 ## Banner 🖼️
 <p align="center">
-<img src="https://github.com/dhimanparas20/python-telegram-Temp_Mail-bot/blob/main/mst.jpg" />
+<img src="https://github.com/dhimanparas20/Fake_Mail_Generator-Telegram-bot/blob/main/mst.jpg" />
 
 ------
 
