@@ -8,6 +8,13 @@ So using this repo you can deploy your Telegram Bot that can generate unlimited 
 ## Banner 🖼️
 <p align="center">
 <img src="https://github.com/dhimanparas20/python-telegram-Temp_Mail-bot/blob/main/mst.jpg" />
+
+------
+
+## Changelog
+
+* Added button GUI <br />
+* No need to type email everytime.
   
 ------
   
@@ -74,9 +81,9 @@ ngrok http 5000
 
 > Open config.env and fill the variables accordingly but put HEROKU_APP_NAME as "forwarding"link provided after running above command.
 
-> Open app.py and commentout lines 18,19,20 (Add #hash at the beginning).
+> Open app.py and commentout lines 20,21,22 (Add #hash at the beginning).
 
-> Open app.py and uncomment lines 19,20,21 (Remove #hash from the beginning).
+> Open app.py and uncomment lines 25,26,27 (Remove #hash from the beginning).
 
 > Run the app
 ```sh
