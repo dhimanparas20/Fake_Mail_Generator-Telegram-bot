@@ -17,14 +17,14 @@ HEROKU_APP_NAME = getConfig("HEROKU_APP_NAME")
 system("clear")  # Cause we like everything clean 
 
 # Heroku Run, to configure Webhook
-#print("-----------------------Attaching Webhook---------------------------")
-#system (f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url=https://{HEROKU_APP_NAME}.herokuapp.com/ ")
-#print("\n-----------------------------------------------------------------")
+print("-----------------------Attaching HEROKU Webhook---------------------------")
+system (f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url=https://{HEROKU_APP_NAME}.herokuapp.com/ ")
+print("\n-----------------------------------------------------------------")
 
 # Local Run. keep this commented untill deploying manually/locally
-print("-----------------------Attaching Webhook---------------------------")
-system(f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={HEROKU_APP_NAME}")
-print("\n-----------------------------------------------------------------")
+#print("-----------------------Attaching LOCAL Webhook---------------------------")
+#system(f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={HEROKU_APP_NAME}")
+#print("\n-----------------------------------------------------------------")
 sleep(2)
 
 app = Flask(__name__)
