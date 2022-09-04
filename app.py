@@ -143,8 +143,8 @@ def send_inlinebutton2(chat_id,mail,coun):
             "inline_keyboard": [
                 [{"text": "Read Latest Mail","callback_data": f"/inbox {mail}"},{"text": "\nPurge/Delete/Empty - INBOX","callback_data": f"/purge {mail}"}],
                 [{"text": "Show last 5 mails","callback_data": f"/list 5 {mail}"},{"text": "Show last 9 mails","callback_data": f"/list 9 {mail}"}],
-                [{"text": "Read a specific mail","callback_data": f"/read {mail}"}],
-                [{"text": "Help","callback_data": "/help"},{"text": "PinG","callback_data": "/ping"}]
+                [{"text": "Read a specific mail","callback_data": f"/read {mail}"}{"text": "See total number of mails","callback_data": f"/count {mail}"}],
+                [{"text": "Help","callback_data": "/help"},{"text": "PinG","callback_data": "ping"}]
              ]    
         }
     }
@@ -207,6 +207,9 @@ last 5 or last 10 mails, or Read a specific mail.")
         mail  = remove(txt[6:])
         send_message(chat_id,send_mail(mail,indx=0))
         
+      elif txt != None and "@mailsac.com" in txt and "/count" in txt: # Shows total no of mails 
+        mail  = remove(txt[6:])  
+        send_message(chat_id,f"Total no of mails for {mail}: {count(mail)}")
       elif txt != None and "@mailsac.com" in txt and "/list" in txt:    # shows last n mails
         mail  = remove(txt[7:])  # for the mail
         print(f"trimmed mail: {mail}")
@@ -290,7 +293,7 @@ last 5 or last 10 mails, or Read a specific mail.")
       elif txt != None and "/index" in txt:  #incomplete command               
         send_message(chat_id,"🤦‍♂️Please add index number and email address after /index command.\n e.g. /index 2 abc@mailsac.com")  
            
-      elif txt == "ping":
+      elif txt == "ping" or txt == "Ping":
 #        ab = ping('www.mailsac.com.com')
 #        print(str(ab)[2:5])
         send_message(chat_id,f"Pong 🏓") 
