@@ -143,7 +143,7 @@ def send_inlinebutton2(chat_id,mail,coun):
             "inline_keyboard": [
                 [{"text": "Read Latest Mail","callback_data": f"/inbox {mail}"},{"text": "\nPurge/Delete/Empty - INBOX","callback_data": f"/purge {mail}"}],
                 [{"text": "Show last 5 mails","callback_data": f"/list 5 {mail}"},{"text": "Show last 9 mails","callback_data": f"/list 9 {mail}"}],
-                [{"text": "Read a specific mail","callback_data": f"/read {mail}"}{"text": "See total number of mails","callback_data": f"/count {mail}"}],
+                [{"text": "Read a specific mail","callback_data": f"/read {mail}"},{"text": "See total number of mails","callback_data": f"/count {mail}"}],
                 [{"text": "Help","callback_data": "/help"},{"text": "PinG","callback_data": "ping"}]
              ]    
         }
