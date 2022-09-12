@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from os import system,environ
 from flask import Response
 from flask import request
-from flask import Flask
+from flask import Flask,render_template
 from ping3 import ping
 from time import sleep
 import requests
@@ -305,7 +305,7 @@ last 5 or last 10 mails, or Read a specific mail.")
       print()
       return Response('ok', status=200)
     else:
-        return "<h1>Welcome! To MST Production</h1>"
+        return render_template('index.html')
 
 if __name__ == '__main__':
    app.run(debug=True)
