@@ -17,15 +17,19 @@ HEROKU_APP_NAME = getConfig("HEROKU_APP_NAME")
 system("clear")  # Cause we like everything clean 
 
 # Heroku Run, to configure Webhook
-print("-----------------------Attaching HEROKU Webhook---------------------------")
-system (f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url=https://{HEROKU_APP_NAME}.herokuapp.com/ ")
-print("\n-----------------------------------------------------------------")
+# print("-----------------------Attaching HEROKU Webhook---------------------------")
+# system (f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url=https://{HEROKU_APP_NAME}.herokuapp.com/ ")
+# print("\n-----------------------------------------------------------------")
 
 # Local Run. keep this commented untill deploying manually/locally
-#print("-----------------------Attaching LOCAL Webhook---------------------------")
-#system(f"curl https://api.telegram.org/bot{BOT_TOKEN}/setWebhook?url={HEROKU_APP_NAME}")
-#print("\n-----------------------------------------------------------------")
-sleep(2)
+url = f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook"
+params = {'url': HEROKU_APP_NAME}
+response = requests.get(url, params=params)
+if response.status_code == 200:
+    print("Webhook set successfully.")
+else:
+    print(f"Failed to set webhook. Status code: {response.status_code}, Response: {response.text}")
+sleep(1)
 
 app = Flask(__name__)
 # function to parse Bot data from JSON.
@@ -194,7 +198,9 @@ e.g: abc@mailsac.com (we will be using this mail for further examples).\n\n🪧U
 the Email you chose. Make sure the Access section says 'Available'. If not please try another email address and you are good to go👍.\n\nLIMITATIONS:\n🔹You can only see either \
 last 5 or last 10 mails, or Read a specific mail.")
                 
-      elif txt != None and "@mailsac.com" in txt and "/use" in txt: #The main config button
+      elif txt != None and "/use" in txt: #The main config button
+        if not "@mailsac.com" in txt:
+          txt += "@mailsac.com"
         mail  = remove(txt[4:])  # Extraction of Email address.
         coun = count(mail) # Total number of Emails.
         send_inlinebutton2(chat_id,mail,coun) 
@@ -308,4 +314,5 @@ last 5 or last 10 mails, or Read a specific mail.")
         return render_template('index.html')
 
 if __name__ == '__main__':
-   app.run(debug=True)
+  app.run(debug=True,port=5000,host="0.0.0.0",threaded=True)
+
